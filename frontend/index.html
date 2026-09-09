@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>LifeFix AI</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f7fb;
+        color: #222;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 80px auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 48px;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        font-size: 20px;
+        color: #666;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    textarea {
+        width: 90%;
+        height: 120px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        font-size: 16px;
+        resize: none;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 14px 30px;
+        border: none;
+        border-radius: 10px;
+        background: #111827;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #374151;
+    }
+
+    #response {
+        margin-top: 25px;
+        font-size: 18px;
+        color: #333;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="container">
+
+    <h1>✨ LifeFix AI</h1>
+
+    <p class="subtitle">
+        Your AI-powered daily life problem solver
+    </p>
+
+    <div class="card">
+
+        <h2>What's troubling you?</h2>
+
+        <textarea
+            id="problem"
+            placeholder="Example: I have too many tasks and don't know how to manage my day..."
+        ></textarea>
+
+        <br>
+
+        <button onclick="solveProblem()">
+            Solve My Problem 🤖
+        </button>
+
+        <div id="response"></div>
+
+    </div>
+
+</div>
+
+<script>
+    async function solveProblem() {
+
+        const problem = document.getElementById("problem").value;
+        const response = document.getElementById("response");
+
+        if (!problem.trim()) {
+            response.innerText = "Please describe your problem first.";
+            return;
+        }
+
+        response.innerText = "Thinking... 🤔";
+
+        try {
+
+            const result = await fetch("http://127.0.0.1:8000/solve", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    text: problem
+                })
+            });
+
+            const data = await result.json();
+
+            response.innerText = data.solution;
+
+        } catch (error) {
+
+            response.innerText =
+                "Something went wrong. Please make sure the LifeFix backend is running.";
+
+        }
+    }
+</script>
+```
+
+</body>
+</html>
